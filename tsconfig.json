@@ -17,20 +17,6 @@
       "*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/models/Admin.ts",
-    "src/models/Story.ts",
-    "src/models/Study.ts",
-    "src/models/User.ts",
-    "src/models/Vibe.ts",
-    "src/config/database.ts",
-    "src/routes/memberRoutes.ts",
-    "src/routes/adminRoutes.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

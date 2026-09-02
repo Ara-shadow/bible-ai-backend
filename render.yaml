@@ -2,7 +2,7 @@ services:
   - type: web
     name: bible-ai-api
     env: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm install -D typescript && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:

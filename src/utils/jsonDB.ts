@@ -1,10 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-// Use a different approach for __dirname that works with ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Use __dirname alternative for CommonJS
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const DATA_DIR = path.join(__dirname, '../../data');
 
 if (!fs.existsSync(DATA_DIR)) {
