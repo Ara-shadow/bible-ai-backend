@@ -1,12 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 
-// Use __dirname alternative for CommonJS
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-const DATA_DIR = path.join(__dirname, '../../data');
+// Use process.cwd() instead of import.meta
+const DATA_DIR = path.join(process.cwd(), 'data');
 
+// Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  } catch (e) {
+    // Ignore errors - directory might already exist
+  }
 }
 
 function readCollection(collection: string) {
@@ -14,13 +18,21 @@ function readCollection(collection: string) {
   if (!fs.existsSync(filePath)) {
     return [];
   }
-  const data = fs.readFileSync(filePath, 'utf-8');
-  return JSON.parse(data);
+  try {
+    const data = fs.readFileSync(filePath, 'utf-8');
+    return JSON.parse(data);
+  } catch (e) {
+    return [];
+  }
 }
 
 function writeCollection(collection: string, data: any[]) {
   const filePath = path.join(DATA_DIR, collection + '.json');
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  } catch (e) {
+    console.error('Error writing to ' + collection + '.json:', e);
+  }
 }
 
 function generateId() {
